@@ -44,9 +44,10 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 Simply include the Tram-Deco script at the top of your page. In order for Tram-Deco to process your templates correctly,
 you'll want to include the `defer` attribute in the script.
 
-> [!important] Tram-Deco depends on declarative shadow DOM, which at the time of writing is not available on all
-> browsers check [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage
-> here.
+> [!important]
+>
+> Tram-Deco depends on declarative shadow DOM, which at the time of writing is not available on all browsers check
+> [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage here.
 
 ```html
 <script defer src="https://unpkg.com/tram-deco@1"></script>
