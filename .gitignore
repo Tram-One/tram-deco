@@ -1,0 +1,5 @@
+# Dependency Directory
+node_modules
+
+# minified output
+*.min.js

@@ -1,0 +1,36 @@
+<script defer src="../nite-lite.js"></script>
+
+<!-- template, for elements that we want to make web components -->
+<template nl-definitions>
+	<!-- definition for "my-counter" -->
+	<my-counter>
+		<!-- DSD, so that we can tap into standard attributes here -->
+		<template shadowrootmode="open" shadowrootdelegatesfocus>
+			<style>
+				button {
+					cursor: pointer;
+					color: blue;
+				}
+			</style>
+			<button><slot>Counter</slot>: <span>0</span></button>
+			<script>
+				console.log('Counter Mounted!', document.nlElement);
+				function updateCounterSpan(counter) {
+					const span = counter.shadowRoot.querySelector('span');
+					span.textContent = counter.getAttribute('count');
+				}
+				updateCounterSpan(document.nlElement);
+				button = document.nlElement.shadowRoot.querySelector('button');
+				button.addEventListener('click', (event) => {
+					const rootNode = event.target.getRootNode().host;
+					const newCount = parseInt(rootNode.getAttribute('count')) + 1;
+					rootNode.setAttribute('count', newCount);
+					updateCounterSpan(rootNode);
+				});
+			</script>
+		</template>
+	</my-counter>
+</template>
+
+<my-counter count="0">Special</my-counter>
+<my-counter count="5"></my-counter>

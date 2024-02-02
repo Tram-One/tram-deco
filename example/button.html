@@ -1,0 +1,16 @@
+<script defer src="../nite-lite.js"></script>
+
+<template nl-definitions>
+	<x-button>
+		<template shadowrootmode="open" delegatesfocus>
+			<button>Click Me!</button>
+			<script>
+				document.nlElement.shadowRoot.querySelector('button').addEventListener('click', () => {
+					alert('You clicked the button!');
+				});
+			</script>
+		</template>
+	</x-button>
+</template>
+
+<x-button></x-button>

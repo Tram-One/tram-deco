@@ -1,0 +1,28 @@
+{
+	"name": "nite-lite",
+	"version": "1.0.0",
+	"description": "Experimental interface for Declarative Custom Elements using Declarative Shadow DOM",
+	"main": "nite-lite.js",
+	"files": [
+		"nite-lite.js",
+		"nite-lite.min.js"
+	],
+	"scripts": {
+		"start": "serve . -p 3000",
+		"build": "uglifyjs nite-lite.js -o nite-lite.min.js -c -m",
+		"test": "echo \"to be added...\" && exit 1"
+	},
+	"keywords": [],
+	"author": {
+		"name": "Jesse Jurman",
+		"email": "j.r.jurman@gmail.com",
+		"url": "https://jrjurman.com"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"cypress": "^13.6.4",
+		"prettier": "^3.2.4",
+		"serve": "^14.2.1",
+		"uglify-js": "^3.17.4"
+	}
+}
