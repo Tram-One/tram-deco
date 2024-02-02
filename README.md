@@ -44,7 +44,8 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 Simply include the nite-lite script at the top of your page. In order for nite-lite to process your templates correctly,
 you'll want to include the `defer` attribute in the script.
 
-> [!important] nite-lite depends on declarative shadow DOM, which at the time of writing is not available on all
+> [!important]
+> nite-lite depends on declarative shadow DOM, which at the time of writing is not available on all
 > browsers check [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage
 > here.
 
