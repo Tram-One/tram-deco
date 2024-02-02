@@ -1,4 +1,4 @@
-<script defer src="../nite-lite.js"></script>
+<script defer src="../tram-deco.js"></script>
 
 <!-- template, for elements that we want to make web components -->
 <template nl-definitions>
@@ -14,13 +14,13 @@
 			</style>
 			<button><slot>Counter</slot>: <span>0</span></button>
 			<script>
-				console.log('Counter Mounted!', document.nlElement);
+				console.log('Counter Mounted!', document.tdElement);
 				function updateCounterSpan(counter) {
 					const span = counter.shadowRoot.querySelector('span');
 					span.textContent = counter.getAttribute('count');
 				}
-				updateCounterSpan(document.nlElement);
-				button = document.nlElement.shadowRoot.querySelector('button');
+				updateCounterSpan(document.tdElement);
+				button = document.tdElement.shadowRoot.querySelector('button');
 				button.addEventListener('click', (event) => {
 					const rootNode = event.target.getRootNode().host;
 					const newCount = parseInt(rootNode.getAttribute('count')) + 1;

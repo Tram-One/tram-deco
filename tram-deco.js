@@ -15,7 +15,7 @@ const definitions = document.querySelector('[nl-definitions]');
 
 	customElements.define(
 		tagName,
-		class NLElement extends HTMLElement {
+		class TDElement extends HTMLElement {
 			constructor() {
 				super();
 				this.attachShadow({ mode, delegatesFocus });
@@ -25,14 +25,14 @@ const definitions = document.querySelector('[nl-definitions]');
 				// set a reference to the current element in the document (for use in the element's script tags)
 				// we do this because there is no other elegant way to get the node that is being mounted
 				// (currentScript will be undefined for scripts in shadowRoots)
-				document.nlElement = this;
+				document.tdElement = this;
 
 				// copy the shadowRoot template and append it to this element's shadowRoot
 				// this will also trigger all script tags
 				this.shadowRoot.append(range.cloneContents());
 
-				// clean up the nlElement
-				delete document.nlElement;
+				// clean up the tdElement
+				delete document.tdElement;
 			}
 		},
 	);

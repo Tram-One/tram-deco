@@ -1,11 +1,11 @@
-<script defer src="../nite-lite.js"></script>
+<script defer src="../tram-deco.js"></script>
 
 <template nl-definitions>
 	<x-button>
 		<template shadowrootmode="open" delegatesfocus>
 			<button>Click Me!</button>
 			<script>
-				document.nlElement.shadowRoot.querySelector('button').addEventListener('click', () => {
+				document.tdElement.shadowRoot.querySelector('button').addEventListener('click', () => {
 					alert('You clicked the button!');
 				});
 			</script>
