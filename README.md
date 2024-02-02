@@ -67,7 +67,7 @@ javascript to accomplish this, and tries to make use of existing APIs when possi
 
 There are two non-standard things provided when using Tram-Deco:
 
-1. `nl-definitions` - an attribute for template tags, that turns all elements in them into web component definitions
+1. `td-definitions` - an attribute for template tags, that turns all elements in them into web component definitions
 2. `document.tdElement` - a pointer to the current element being mounted, can be referenced in script tags when building
    components
 

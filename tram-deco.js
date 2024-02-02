@@ -1,5 +1,5 @@
 // pull definitions (you can have more than one)
-const definitions = document.querySelector('[nl-definitions]');
+const definitions = document.querySelector('[td-definitions]');
 
 // for each definition in the template, define a web component
 [...definitions.content.children].forEach((newElement) => {
