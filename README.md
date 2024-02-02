@@ -10,29 +10,29 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 
 <!-- define some web components -->
 <template td-definitions>
-	<!-- definition for a custom-title tag! -->
-	<custom-title>
-		<!-- declarative shadow dom for the insides -->
-		<template shadowrootmode="open">
-			<!-- styles, for just this element -->
-			<style>
-				h1 {
-					color: blue;
-				}
-			</style>
+  <!-- definition for a custom-title tag! -->
+  <custom-title>
+    <!-- declarative shadow dom for the insides -->
+    <template shadowrootmode="open">
+      <!-- styles, for just this element -->
+      <style>
+        h1 {
+          color: blue;
+        }
+      </style>
 
-			<!-- dom, to show on the page -->
-			<h1>
-				<slot>Hello World</slot>
-			</h1>
-			<hr />
+      <!-- dom, to show on the page -->
+      <h1>
+        <slot>Hello World</slot>
+      </h1>
+      <hr />
 
-			<!-- scripts, that run when the component mounts -->
-			<script>
-				document.title = document.tdElement.textContent || 'Hello World';
-			</script>
-		</template>
-	</custom-title>
+      <!-- scripts, that run when the component mounts -->
+      <script>
+        document.title = document.tdElement.textContent || 'Hello World';
+      </script>
+    </template>
+  </custom-title>
 </template>
 
 <!-- use our new element! -->
