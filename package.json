@@ -11,7 +11,7 @@
 		"start": "serve . -p 3000",
 		"prepublishOnly": "npm run build",
 		"build": "uglifyjs tram-deco.js -o tram-deco.min.js -c -m",
-		"test": "echo \"to be added...\" && exit 1"
+		"test": "cypress open"
 	},
 	"keywords": [],
 	"author": {

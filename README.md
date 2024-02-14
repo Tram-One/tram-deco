@@ -39,6 +39,8 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 <custom-title>Tram-Deco is Cool!</custom-title>
 ```
 
+[Live on Codepen](https://codepen.io/JRJurman/pen/Jjzvmqz)
+
 ## How to use
 
 Simply include the Tram-Deco script at the top of your page. In order for Tram-Deco to process your templates correctly,
