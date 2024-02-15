@@ -1,0 +1,70 @@
+<script defer src="../tram-deco.js"></script>
+
+<!-- define some web components -->
+<template td-definitions>
+	<!-- definition for a custom-title tag! -->
+	<custom-title>
+		<!-- declarative shadow dom for the insides -->
+		<template shadowrootmode="open">
+			<!-- styles, for just this element -->
+			<style>
+				h1 {
+					color: blue;
+				}
+			</style>
+
+			<!-- dom, to show on the page -->
+			<h1>
+				<slot>Hello World</slot>
+			</h1>
+			<hr />
+
+			<!-- scripts, that run when the component mounts -->
+			<script td-connectedcallback>
+				document.title = this.textContent || 'Hello World';
+			</script>
+		</template>
+	</custom-title>
+
+	<!-- clickable button example -->
+	<x-button>
+		<template shadowrootmode="open" delegatesfocus>
+			<button>Click Me!</button>
+			<script td-connectedcallback>
+				this.shadowRoot.querySelector('button').addEventListener('click', () => {
+					alert('You clicked the button!');
+				});
+			</script>
+		</template>
+	</x-button>
+
+	<!-- counter example -->
+	<my-counter td-observedattributes="count">
+		<template shadowrootmode="open" shadowrootdelegatesfocus>
+			<style>
+				button {
+					cursor: pointer;
+					color: blue;
+				}
+			</style>
+			<button><slot>Counter</slot>: <span>0</span></button>
+			<script td-connectedcallback>
+				console.log('Counter Mounted!', this);
+				const button = this.shadowRoot.querySelector('button');
+				button.addEventListener('click', (event) => {
+					const newCount = parseInt(this.getAttribute('count')) + 1;
+					this.setAttribute('count', newCount);
+				});
+			</script>
+			<script td-attributechangedcallback>
+				const span = this.shadowRoot.querySelector('span');
+				span.textContent = this.getAttribute('count');
+			</script>
+		</template>
+	</my-counter>
+</template>
+
+<custom-title>Tram-Deco is Cool!</custom-title>
+<x-button></x-button>
+<my-counter count="0"></my-counter>
+<my-counter count="12">Special</my-counter>

@@ -28,8 +28,8 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
       <hr />
 
       <!-- scripts, that run when the component mounts -->
-      <script>
-        document.title = document.tdElement.textContent || 'Hello World';
+      <script td-connectedcallback>
+        document.title = this.textContent || 'Hello World';
       </script>
     </template>
   </custom-title>
@@ -68,25 +68,61 @@ javascript to accomplish this, and tries to make use of existing APIs when possi
 
 ## API
 
-There are two non-standard things provided when using Tram-Deco:
+Tram-Deco exposes the following attributes to help you build and configure declarative web components
 
-1. `td-definitions` - an attribute for template tags, that turns all elements in them into web component definitions
-2. `document.tdElement` - a pointer to the current element being mounted, can be referenced in script tags when building
-   components
+### Top Level API
 
-## Gotchas
+<dl>
+<dt><code>td-definitions</code></dt>
+<dd>
+  Attribute to be used on the <code>template</code> surrounding your component definitions. You can have multiple templates,
+  or just a single one for all of your definitions. These need to be on the page before Tram-Deco is loaded.
+</dd>
+</dl>
 
-When building web components with Tram-Deco, there are a few things to keep in mind.
+### Component API
 
-### Script tags share context
+These attributes can be used to provide logic for different life cycle events of your component. They follow the
+standard API for Web Components.
 
-Be careful when building complex logic and saving variables in script tags. All script tags share context, so if you use
-`const`, and use an element twice, you are likely to get an error that the variable is already defined.
-
-### document.currentScript is undefined
-
-Because script tags are loaded in a shadow root, they won't have access to the element that mounted them. This is why
-`document.tdElement` is provided.
+<dl>
+<dt><code>td-observedattributes</code></dt>
+<dd>
+  Attribute to be used on a custom element tag for your component definition.
+  This attribute defines the values for the static <code>observedAttributes</code> on the component, and drives
+  the <code>attributeChangedCallback</code> for your component. It should be a space delimited list of values.
+</dd>
+<dt><code>td-constructor</code></dt>
+<dd>
+  Attribute to be used on a <code>script</code> tag in your component definition.
+  This script hooks into the <code>constructor</code> method, and will be called when the element is being
+  constructed, after `super()` and after we have cloned the content into the shadow root of the element.
+</dd>
+<dt><code>td-connectedcallback</code></dt>
+<dd>
+  Attribute to be used on a <code>script</code> tag in your component definition.
+  This script hooks into the <code>connectedCallback</code> method, and will be called when the element is
+  appended to the DOM.
+</dd>
+<dt><code>td-disconnectedcallback</code></dt>
+<dd>
+  Attribute to be used on a <code>script</code> tag in your component definition.
+  This script hooks into the <code>disconnectedCallback</code> method, and will be called when the element is
+  removed from the DOM.
+</dd>
+<dt><code>td-adoptedcallback</code></dt>
+<dd>
+  Attribute to be used on a <code>script</code> tag in your component definition.
+  This script hooks into the <code>adoptedCallback</code> method, and will be called when the element moves
+  between documents.
+</dd>
+<dt><code>td-attributechangedcallback</code></dt>
+<dd>
+  Attribute to be used on a <code>script</code> tag in your component definition.
+  This script hooks into the <code>attributeChangedCallback</code> method, and will be called when one of the
+  element's attributes are added, removed, or updated.
+</dd>
+</dl>
 
 ## contributions / discussions
 
@@ -95,5 +131,5 @@ If you think this is useful or interesting, I'd love to hear your thoughts! Feel
 [Tram-One discord](https://discord.gg/dpBXAQC).
 
 As for feature requests, note that this is very much intended to be an experimental project, and feature-lite, leaning
-heavily on standard APIs unless absolutely necessary. If you would like a more feature rich Declarative HTML Experience,
-I'd recommend checking out [Tram-Lite](https://tram-one.io/tram-lite/)!
+heavily on standard APIs unless absolutely necessary. If you would like a more complex Declarative HTML Experience, I'd
+recommend checking out [Tram-Lite](https://tram-one.io/tram-lite/)!
