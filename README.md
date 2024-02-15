@@ -6,7 +6,7 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 
 ```html
 <!-- include the Tram-Deco library -->
-<script defer src="https://unpkg.com/tram-deco@1"></script>
+<script defer src="https://unpkg.com/tram-deco@2"></script>
 
 <!-- define some web components -->
 <template td-definitions>
@@ -39,7 +39,7 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 <custom-title>Tram-Deco is Cool!</custom-title>
 ```
 
-[Live on Codepen](https://codepen.io/JRJurman/pen/Jjzvmqz)
+[Live on Codepen](https://codepen.io/JRJurman/pen/NWJeOOz)
 
 ## How to use
 
@@ -52,13 +52,13 @@ you'll want to include the `defer` attribute in the script.
 > [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage here.
 
 ```html
-<script defer src="https://unpkg.com/tram-deco@1"></script>
+<script defer src="https://unpkg.com/tram-deco@2"></script>
 ```
 
 If you want the minified version you can point to that instead:
 
 ```html
-<script defer src="https://unpkg.com/tram-deco@1/tram-deco.min.js"></script>
+<script defer src="https://unpkg.com/tram-deco@2/tram-deco.min.js"></script>
 ```
 
 ## What is Tram-Deco?
@@ -123,6 +123,41 @@ standard API for Web Components.
   element's attributes are added, removed, or updated.
 </dd>
 </dl>
+
+#### Example Using Component API
+
+```html
+<script defer src="https://unpkg.com/tram-deco@2"></script>
+
+<template td-definitions>
+  <!-- td-observedattributes, to watch for attribute changes on count -->
+  <my-counter td-observedattributes="count">
+    <template shadowrootmode="open" shadowrootdelegatesfocus>
+      <button><slot>Counter</slot>: <span>0</span></button>
+
+      <!-- when we mount this component, add an event listener -->
+      <script td-connectedcallback>
+        console.log('Counter Mounted!', this);
+        const button = this.shadowRoot.querySelector('button');
+        button.addEventListener('click', (event) => {
+          const newCount = parseInt(this.getAttribute('count')) + 1;
+          this.setAttribute('count', newCount);
+        });
+      </script>
+
+      <!-- when the count updates, update the template -->
+      <script td-attributechangedcallback>
+        const span = this.shadowRoot.querySelector('span');
+        span.textContent = this.getAttribute('count');
+      </script>
+    </template>
+  </my-counter>
+</template>
+
+<my-counter count="0">Tram-Deco</my-counter>
+```
+
+[Live on Codepen](https://codepen.io/JRJurman/pen/VwRqEBm)
 
 ## contributions / discussions
 
