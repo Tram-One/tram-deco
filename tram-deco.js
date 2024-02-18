@@ -42,8 +42,6 @@ const definitions = document.querySelectorAll('[td-definitions]:not([defined])')
 			elementAPIScripts[key] = script;
 		});
 
-		console.log({ elementAPIScripts });
-
 		customElements.define(
 			tagName,
 			class TDElement extends HTMLElement {
