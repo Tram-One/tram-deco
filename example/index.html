@@ -25,7 +25,9 @@
 
 			<!-- scripts, that run when the component mounts -->
 			<script td-connectedcallback>
-				document.title = this.textContent || 'Hello World';
+				this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
+					document.title = this.textContent || 'Hello World';
+				});
 			</script>
 		</template>
 	</custom-title>
