@@ -1,7 +1,7 @@
 {
 	"name": "tram-deco",
 	"version": "3.0.0",
-	"description": "Experimental interface for Declarative Custom Elements using Declarative Shadow DOM",
+	"description": "Declarative Custom Elements using native Web Component APIs and specs",
 	"main": "tram-deco.js",
 	"files": [
 		"tram-deco.js",

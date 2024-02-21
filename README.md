@@ -1,6 +1,10 @@
 # Tram-Deco
 
-Experimental interface for Declarative Custom Elements using Declarative Shadow DOM
+_Declarative Custom Elements using native Web Component APIs and specs._
+
+Tram-Deco provides a more elegant interface for building Web Components, that remains as close as possible to the
+existing browser APIs. Tram-Deco is an experiment to determine the value of a declarative interface for building Web
+Components, without the addition of APIs that don't already exist.
 
 ## Example
 
