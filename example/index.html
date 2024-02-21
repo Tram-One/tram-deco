@@ -1,6 +1,10 @@
-<script defer src="../tram-deco.js"></script>
+<script src="../tram-deco.js"></script>
 
-<!-- define some web components -->
+<script>
+	TramDeco.watch();
+</script>
+
+<!-- template that will be picked up by TramDeco.watch() -->
 <template td-definitions>
 	<!-- definition for a custom-title tag! -->
 	<custom-title>
@@ -25,19 +29,10 @@
 			</script>
 		</template>
 	</custom-title>
+</template>
 
-	<!-- clickable button example -->
-	<x-button>
-		<template shadowrootmode="open" delegatesfocus>
-			<button>Click Me!</button>
-			<script td-connectedcallback>
-				this.shadowRoot.querySelector('button').addEventListener('click', () => {
-					alert('You clicked the button!');
-				});
-			</script>
-		</template>
-	</x-button>
-
+<!-- template to be defined later with TramDeco.define() -->
+<template id="counter-definition">
 	<!-- counter example -->
 	<my-counter td-observedattributes="count">
 		<template shadowrootmode="open" shadowrootdelegatesfocus>
@@ -64,7 +59,16 @@
 	</my-counter>
 </template>
 
+<script>
+	TramDeco.define(document.getElementById('counter-definition').content.querySelector('my-counter'));
+</script>
+
+<!-- import definition from external file -->
+<script>
+	TramDeco.import('./spoiler-tag.html');
+</script>
+
 <custom-title>Tram-Deco is Cool!</custom-title>
-<x-button></x-button>
 <my-counter count="0"></my-counter>
 <my-counter count="12">Special</my-counter>
+This is some <spoiler-tag>spoiler</spoiler-tag> content.

@@ -6,7 +6,10 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 
 ```html
 <!-- include the Tram-Deco library -->
-<script defer src="https://unpkg.com/tram-deco@2"></script>
+<script src="https://unpkg.com/tram-deco@3"></script>
+<script>
+  TramDeco.watch();
+</script>
 
 <!-- define some web components -->
 <template td-definitions>
@@ -43,22 +46,51 @@ Experimental interface for Declarative Custom Elements using Declarative Shadow 
 
 ## How to use
 
-Simply include the Tram-Deco script at the top of your page. In order for Tram-Deco to process your templates correctly,
-you'll want to include the `defer` attribute in the script.
-
 > [!important]
 >
-> Tram-Deco depends on declarative shadow DOM, which at the time of writing is not available on all browsers check
+> Tram-Deco depends on declarative shadow DOM, which at the time of writing is not available on all browsers. Check
 > [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage here.
 
+Tram-Deco exposes several different API methods that you can call to build Web Components, depending on your use case.
+
+<dl>
+<dt><code>TramDeco.watch()</code></dt>
+<dd>
+
+The most straight forward way to build Web Component definitions. The `watch()` function starts a mutation observer that
+watches for template tags with the `td-definitions` attribute. When these appear in the DOM, Tram-Deco will process
+them, and build the component definitions inside. When it finishes processing these, it updates the template with an
+attribute `defined`.
+
+</dd>
+<dt><code>TramDeco.define(elementDefinition)</code></dt>
+<dd>
+
+The `define` function takes in a single tag with a declarative shadow dom template, and turns it into a Web Component
+definition. In the above example, it is everything inside the `td-definitions` template. This is useful if you have a
+single component you would like to define, potentially with a specific version of Tram-Deco.
+
+</dd>
+<dt><code>TramDeco.import(componentPath)</code></dt>
+<dd>
+
+**IMPORTANT: THIS REQUIRES `Document.parseHTMLUnsafe` WHICH IS NOT AVAILABLE IN ANY BROWSER**
+
+The `import` function takes in a path to a component definition file, and defines all component definitions inside as
+new Web Component definitions. In the above example, it is everything inside the `td-definitions` template. This is
+useful if you want to save your component definitions in separate files.
+
+</dd>
+</dl>
+
 ```html
-<script defer src="https://unpkg.com/tram-deco@2"></script>
+<script src="https://unpkg.com/tram-deco@3"></script>
 ```
 
 If you want the minified version you can point to that instead:
 
 ```html
-<script defer src="https://unpkg.com/tram-deco@2/tram-deco.min.js"></script>
+<script src="https://unpkg.com/tram-deco@3/tram-deco.min.js"></script>
 ```
 
 ## What is Tram-Deco?
@@ -88,46 +120,58 @@ standard API for Web Components.
 <dl>
 <dt><code>td-observedattributes</code></dt>
 <dd>
-  Attribute to be used on a custom element tag for your component definition.
-  This attribute defines the values for the static <code>observedAttributes</code> on the component, and drives
-  the <code>attributeChangedCallback</code> for your component. It should be a space delimited list of values.
+
+Attribute to be used on a custom element tag for your component definition. This attribute defines the values for the
+static `observedAttributes` on the component, and drives the `attributeChangedCallback` for your component. It should be
+a space delimited list of values.
+
 </dd>
 <dt><code>td-constructor</code></dt>
 <dd>
-  Attribute to be used on a <code>script</code> tag in your component definition.
-  This script hooks into the <code>constructor</code> method, and will be called when the element is being
-  constructed, after `super()` and after we have cloned the content into the shadow root of the element.
+
+Attribute to be used on a `script` tag in your component definition. This script hooks into the `constructor` method,
+and will be called when the element is being constructed, after `super()` and after we have cloned the content into the
+shadow root of the element.
+
 </dd>
 <dt><code>td-connectedcallback</code></dt>
 <dd>
-  Attribute to be used on a <code>script</code> tag in your component definition.
-  This script hooks into the <code>connectedCallback</code> method, and will be called when the element is
-  appended to the DOM.
+
+Attribute to be used on a `script` tag in your component definition. This script hooks into the `connectedCallback`
+method, and will be called when the element is appended to the DOM.
+
 </dd>
 <dt><code>td-disconnectedcallback</code></dt>
 <dd>
-  Attribute to be used on a <code>script</code> tag in your component definition.
-  This script hooks into the <code>disconnectedCallback</code> method, and will be called when the element is
-  removed from the DOM.
+
+Attribute to be used on a `script` tag in your component definition. This script hooks into the `disconnectedCallback`
+method, and will be called when the element is removed from the DOM.
+
 </dd>
 <dt><code>td-adoptedcallback</code></dt>
 <dd>
-  Attribute to be used on a <code>script</code> tag in your component definition.
-  This script hooks into the <code>adoptedCallback</code> method, and will be called when the element moves
-  between documents.
+
+Attribute to be used on a `script` tag in your component definition. This script hooks into the `adoptedCallback`
+method, and will be called when the element moves between documents.
+
 </dd>
 <dt><code>td-attributechangedcallback</code></dt>
 <dd>
-  Attribute to be used on a <code>script</code> tag in your component definition.
-  This script hooks into the <code>attributeChangedCallback</code> method, and will be called when one of the
-  element's attributes are added, removed, or updated.
+
+Attribute to be used on a `script` tag in your component definition. This script hooks into the
+`attributeChangedCallback` method, and will be called when one of the element's attributes are added, removed, or
+updated.
+
 </dd>
 </dl>
 
 #### Example Using Component API
 
 ```html
-<script defer src="https://unpkg.com/tram-deco@2"></script>
+<script src="https://unpkg.com/tram-deco@3"></script>
+<script>
+  TramDeco.watch();
+</script>
 
 <template td-definitions>
   <!-- td-observedattributes, to watch for attribute changes on count -->
