@@ -57,6 +57,27 @@ Components, without the addition of APIs that don't already exist.
 > Tram-Deco depends on declarative shadow DOM, which at the time of writing is not available on all browsers. Check
 > [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage here.
 
+The most straight-forward way to use Tram-Deco is to include the script in your project, and call `TramDeco.watch()`.
+There are other ways to build components listed in the JS API section below, but this will automatically find and build
+component definitions in your project.
+
+```html
+<script src="https://unpkg.com/tram-deco@3"></script>
+<script>
+  TramDeco.watch();
+</script>
+```
+
+If you want the minified version you can point to that instead:
+
+```html
+<script src="https://unpkg.com/tram-deco@3/tram-deco.min.js"></script>
+```
+
+## API
+
+### JS API
+
 Tram-Deco exposes several different API methods that you can call to build Web Components, depending on your use case.
 
 <dl>
@@ -89,36 +110,23 @@ useful if you want to save your component definitions in separate files.
 </dd>
 </dl>
 
-```html
-<script src="https://unpkg.com/tram-deco@3"></script>
-```
-
-If you want the minified version you can point to that instead:
-
-```html
-<script src="https://unpkg.com/tram-deco@3/tram-deco.min.js"></script>
-```
-
-## What is Tram-Deco?
-
-Tram-Deco is an experimental way to build web components in a declarative way. It uses a very minimal amount of
-javascript to accomplish this, and tries to make use of existing APIs when possible.
-
-## API
+### HTML API
 
 Tram-Deco exposes the following attributes to help you build and configure declarative web components
 
-### Top Level API
+#### Top Level API
 
 <dl>
 <dt><code>td-definitions</code></dt>
 <dd>
-  Attribute to be used on the <code>template</code> surrounding your component definitions. You can have multiple templates,
-  or just a single one for all of your definitions. These need to be on the page before Tram-Deco is loaded.
+
+Attribute to be used on the <code>template</code> surrounding your component definitions. You can have multiple
+templates, or just a single one for all of your definitions. These need to be on the page before Tram-Deco is loaded.
+
 </dd>
 </dl>
 
-### Component API
+#### Component API
 
 These attributes can be used to provide logic for different life cycle events of your component. They follow the
 standard API for Web Components.
