@@ -120,8 +120,9 @@ Tram-Deco exposes the following attributes to help you build and configure decla
 <dt><code>td-definitions</code></dt>
 <dd>
 
-Attribute to be used on the <code>template</code> surrounding your component definitions. You can have multiple
-templates, or just a single one for all of your definitions. These need to be on the page before Tram-Deco is loaded.
+Attribute to be used on the `<template>` surrounding your component definitions. You can have multiple templates, or
+just a single one for all of your definitions. These template tags will be picked up automatically with
+`TramDeco.watch()`.
 
 </dd>
 </dl>
