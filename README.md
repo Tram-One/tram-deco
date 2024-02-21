@@ -36,7 +36,9 @@ Components, without the addition of APIs that don't already exist.
 
       <!-- scripts, that run when the component mounts -->
       <script td-connectedcallback>
-        document.title = this.textContent || 'Hello World';
+        this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
+          document.title = this.textContent || 'Hello World';
+        });
       </script>
     </template>
   </custom-title>
@@ -46,7 +48,7 @@ Components, without the addition of APIs that don't already exist.
 <custom-title>Tram-Deco is Cool!</custom-title>
 ```
 
-[Live on Codepen](https://codepen.io/JRJurman/pen/NWJeOOz)
+[Live on Codepen](https://codepen.io/JRJurman/pen/BabEMwo)
 
 ## How to use
 
@@ -205,14 +207,10 @@ updated.
 <my-counter count="0">Tram-Deco</my-counter>
 ```
 
-[Live on Codepen](https://codepen.io/JRJurman/pen/VwRqEBm)
+[Live on Codepen](https://codepen.io/JRJurman/pen/zYbXeEW)
 
 ## contributions / discussions
 
 If you think this is useful or interesting, I'd love to hear your thoughts! Feel free to
 [reach out to me on mastodon](https://fosstodon.org/@jrjurman), or join the
 [Tram-One discord](https://discord.gg/dpBXAQC).
-
-As for feature requests, note that this is very much intended to be an experimental project, and feature-lite, leaning
-heavily on standard APIs unless absolutely necessary. If you would like a more complex Declarative HTML Experience, I'd
-recommend checking out [Tram-Lite](https://tram-one.io/tram-lite/)!
