@@ -101,7 +101,10 @@ single component you would like to define, potentially with a specific version o
 <dt><code>TramDeco.import(componentPath)</code></dt>
 <dd>
 
-**IMPORTANT: THIS REQUIRES `Document.parseHTMLUnsafe` WHICH IS NOT AVAILABLE IN ANY BROWSER**
+> [!warning]
+>
+> Importing by path requires `Document.parseHTMLUnsafe` which is only available (at the time of writing) on technical
+> previews of most browsers.
 
 The `import` function takes in a path to a component definition file, and defines all component definitions inside as
 new Web Component definitions. In the above example, it is everything inside the `td-definitions` template. This is
