@@ -8,18 +8,10 @@ Components, without the addition of APIs that don't already exist.
 
 <img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads">
 <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
-<a href="https://unpkg.com/tram-deco@4/tram-deco.min.js">
-  <img src="https://img.shields.io/badge/gzip-800B-006369.svg?style=flat" alt="Gzipped Size">
-</a>
-<a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE">
-  <img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License">
-</a>
-<a href="https://discord.gg/dpBXAQC">
-  <img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord">
-</a>
-<a href="https://codepen.io/pen?template=JjzQmaL">
-  <img src="https://img.shields.io/badge/codepen-template-DD6369.svg?style=flat" alt="Codepen Template">
-</a>
+<a href="https://unpkg.com/tram-deco@4/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-800B-006369.svg?style=flat" alt="Gzipped Size"></a>
+<a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License"></a>
+<a href="https://discord.gg/dpBXAQC"><img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord"></a>
+<a href="https://codepen.io/pen?template=JjzQmaL"><img src="https://img.shields.io/badge/codepen-template-DD6369.svg?style=flat" alt="Codepen Template"></a>
 
 ## Example
 
@@ -63,7 +55,7 @@ Components, without the addition of APIs that don't already exist.
 <custom-title>Tram-Deco is Cool!</custom-title>
 ```
 
-[Live on Codepen](https://codepen.io/JRJurman/pen/BabEMwo)
+[Live on Codepen](https://codepen.io/JRJurman/pen/YzMyGPL)
 
 ## How to use
 
@@ -234,7 +226,7 @@ updated.
 <my-counter count="0">Tram-Deco</my-counter>
 ```
 
-[Live on Codepen](https://codepen.io/JRJurman/pen/zYbXeEW)
+[Live on Codepen](https://codepen.io/JRJurman/pen/QWPjKbL)
 
 ## contributions / discussions
 
