@@ -1,6 +1,6 @@
 {
 	"name": "tram-deco",
-	"version": "4.0.1",
+	"version": "4.0.2",
 	"description": "Declarative Custom Elements using native Web Component APIs and specs",
 	"main": "tram-deco.js",
 	"files": [
