@@ -53,13 +53,11 @@ class TramDeco {
 		range.selectNodeContents(shadowRoot);
 
 		// pull script tags with specific behavior that we want to use in our component
-		const elementAPIScripts = {};
+		const elScripts = {};
 		Object.entries(TramDeco.apiScripts).forEach(([key, elementAttribute]) => {
-			const element = shadowRoot.querySelector(`script[${elementAttribute}]`);
+			const element = newElement.querySelector(`script[${elementAttribute}]`);
 			const script = element?.textContent;
-			// remove element from the shadow root (so we don't call it again)
-			element?.remove?.();
-			elementAPIScripts[key] = script;
+			elScripts[key] = script;
 		});
 
 		customElements.define(
@@ -77,32 +75,32 @@ class TramDeco {
 					this.shadowRoot.append(range.cloneContents());
 
 					// if we were told to do anything else on construction, do it here
-					if (elementAPIScripts.constructor) {
-						eval(elementAPIScripts.constructor);
+					if (elScripts.constructor) {
+						eval(elScripts.constructor);
 					}
 				}
 
 				connectedCallback() {
-					if (elementAPIScripts.connectedCallback) {
-						eval(elementAPIScripts.connectedCallback);
+					if (elScripts.connectedCallback) {
+						eval(elScripts.connectedCallback);
 					}
 				}
 
 				disconnectedCallback() {
-					if (elementAPIScripts.disconnectedCallback) {
-						eval(elementAPIScripts.disconnectedCallback);
+					if (elScripts.disconnectedCallback) {
+						eval(elScripts.disconnectedCallback);
 					}
 				}
 
 				adoptedCallback() {
-					if (elementAPIScripts.adoptedCallback) {
-						eval(elementAPIScripts.adoptedCallback);
+					if (elScripts.adoptedCallback) {
+						eval(elScripts.adoptedCallback);
 					}
 				}
 
 				attributeChangedCallback() {
-					if (elementAPIScripts.attributeChangedCallback) {
-						eval(elementAPIScripts.attributeChangedCallback);
+					if (elScripts.attributeChangedCallback) {
+						eval(elScripts.attributeChangedCallback);
 					}
 				}
 			},
@@ -118,6 +116,12 @@ class TramDeco {
 		// set up mutation observer for definition templates that might appear later
 		const observer = new MutationObserver(TramDeco.processTemplates);
 		observer.observe(document, { subtree: true, childList: true });
+
+		// clean up the mutation observer once the document finishes loading
+		// (we don't expect more elements to load at this point)
+		window.addEventListener('DOMContentLoaded', () => {
+			observer.disconnect();
+		});
 	}
 
 	// function to pull an external html definition

@@ -22,14 +22,14 @@
 				<slot>Hello World</slot>
 			</h1>
 			<hr />
-
-			<!-- scripts, that run when the component mounts -->
-			<script td-connectedcallback>
-				this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
-					document.title = this.textContent || 'Hello World';
-				});
-			</script>
 		</template>
+
+		<!-- scripts, that run when the component mounts -->
+		<script td-connectedcallback>
+			this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
+				document.title = this.textContent || 'Hello World';
+			});
+		</script>
 	</custom-title>
 </template>
 
@@ -45,19 +45,20 @@
 				}
 			</style>
 			<button><slot>Counter</slot>: <span>0</span></button>
-			<script td-connectedcallback>
-				console.log('Counter Mounted!', this);
-				const button = this.shadowRoot.querySelector('button');
-				button.addEventListener('click', (event) => {
-					const newCount = parseInt(this.getAttribute('count')) + 1;
-					this.setAttribute('count', newCount);
-				});
-			</script>
-			<script td-attributechangedcallback>
-				const span = this.shadowRoot.querySelector('span');
-				span.textContent = this.getAttribute('count');
-			</script>
 		</template>
+
+		<script td-connectedcallback>
+			console.log('Counter Mounted!', this);
+			const button = this.shadowRoot.querySelector('button');
+			button.addEventListener('click', (event) => {
+				const newCount = parseInt(this.getAttribute('count')) + 1;
+				this.setAttribute('count', newCount);
+			});
+		</script>
+		<script td-attributechangedcallback>
+			const span = this.shadowRoot.querySelector('span');
+			span.textContent = this.getAttribute('count');
+		</script>
 	</my-counter>
 </template>
 

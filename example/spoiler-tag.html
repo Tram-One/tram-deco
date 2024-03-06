@@ -29,27 +29,27 @@
 				<slot></slot>
 			</span>
 		</span>
-
-		<script td-constructor>
-			this.control = this.shadowRoot.querySelector('[part="control"]');
-			this.content = this.shadowRoot.querySelector('[part="content"]');
-
-			this.reveal = () => {
-				this.control.ariaLabel = null;
-				this.control.role = 'presentation';
-				this.control.tabIndex = -1;
-				this.content.ariaHidden = 'false';
-				this.control.ariaExpanded = 'true';
-			};
-		</script>
-
-		<script td-connectedCallback>
-			this.control.addEventListener('click', this.reveal, { once: true });
-			this.control.addEventListener('keydown', (event) => {
-				if (event.key === ' ' || event.key === 'Enter') {
-					this.reveal();
-				}
-			});
-		</script>
 	</template>
+
+	<script td-constructor>
+		this.control = this.shadowRoot.querySelector('[part="control"]');
+		this.content = this.shadowRoot.querySelector('[part="content"]');
+
+		this.reveal = () => {
+			this.control.ariaLabel = null;
+			this.control.role = 'presentation';
+			this.control.tabIndex = -1;
+			this.content.ariaHidden = 'false';
+			this.control.ariaExpanded = 'true';
+		};
+	</script>
+
+	<script td-connectedCallback>
+		this.control.addEventListener('click', this.reveal, { once: true });
+		this.control.addEventListener('keydown', (event) => {
+			if (event.key === ' ' || event.key === 'Enter') {
+				this.reveal();
+			}
+		});
+	</script>
 </spoiler-tag>

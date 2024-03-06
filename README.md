@@ -8,7 +8,7 @@ Components, without the addition of APIs that don't already exist.
 
 <img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads">
 <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
-<a href="https://unpkg.com/tram-deco@3/tram-deco.min.js">
+<a href="https://unpkg.com/tram-deco@4/tram-deco.min.js">
   <img src="https://img.shields.io/badge/gzip-800B-006369.svg?style=flat" alt="Gzipped Size">
 </a>
 <a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE">
@@ -25,7 +25,7 @@ Components, without the addition of APIs that don't already exist.
 
 ```html
 <!-- include the Tram-Deco library -->
-<script src="https://unpkg.com/tram-deco@3"></script>
+<script src="https://unpkg.com/tram-deco@4"></script>
 <script>
   TramDeco.watch();
 </script>
@@ -48,14 +48,14 @@ Components, without the addition of APIs that don't already exist.
         <slot>Hello World</slot>
       </h1>
       <hr />
-
-      <!-- scripts, that run when the component mounts -->
-      <script td-connectedcallback>
-        this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
-          document.title = this.textContent || 'Hello World';
-        });
-      </script>
     </template>
+
+    <!-- scripts, that let you define lifecycle methods -->
+    <script td-connectedcallback>
+      this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
+        document.title = this.textContent || 'Hello World';
+      });
+    </script>
   </custom-title>
 </template>
 
@@ -77,7 +77,7 @@ There are other ways to build components listed in the JS API section below, but
 component definitions in your project.
 
 ```html
-<script src="https://unpkg.com/tram-deco@3"></script>
+<script src="https://unpkg.com/tram-deco@4"></script>
 <script>
   TramDeco.watch();
 </script>
@@ -86,7 +86,7 @@ component definitions in your project.
 If you want the minified version you can point to that instead:
 
 ```html
-<script src="https://unpkg.com/tram-deco@3/tram-deco.min.js"></script>
+<script src="https://unpkg.com/tram-deco@4/tram-deco.min.js"></script>
 ```
 
 ## API
@@ -201,7 +201,7 @@ updated.
 #### Example Using Component API
 
 ```html
-<script src="https://unpkg.com/tram-deco@3"></script>
+<script src="https://unpkg.com/tram-deco@4"></script>
 <script>
   TramDeco.watch();
 </script>
@@ -211,23 +211,23 @@ updated.
   <my-counter td-observedattributes="count">
     <template shadowrootmode="open" shadowrootdelegatesfocus>
       <button><slot>Counter</slot>: <span>0</span></button>
-
-      <!-- when we mount this component, add an event listener -->
-      <script td-connectedcallback>
-        console.log('Counter Mounted!', this);
-        const button = this.shadowRoot.querySelector('button');
-        button.addEventListener('click', (event) => {
-          const newCount = parseInt(this.getAttribute('count')) + 1;
-          this.setAttribute('count', newCount);
-        });
-      </script>
-
-      <!-- when the count updates, update the template -->
-      <script td-attributechangedcallback>
-        const span = this.shadowRoot.querySelector('span');
-        span.textContent = this.getAttribute('count');
-      </script>
     </template>
+
+    <!-- when we mount this component, add an event listener -->
+    <script td-connectedcallback>
+      console.log('Counter Mounted!', this);
+      const button = this.shadowRoot.querySelector('button');
+      button.addEventListener('click', (event) => {
+        const newCount = parseInt(this.getAttribute('count')) + 1;
+        this.setAttribute('count', newCount);
+      });
+    </script>
+
+    <!-- when the count updates, update the template -->
+    <script td-attributechangedcallback>
+      const span = this.shadowRoot.querySelector('span');
+      span.textContent = this.getAttribute('count');
+    </script>
   </my-counter>
 </template>
 
