@@ -6,8 +6,7 @@ Tram-Deco provides a more elegant interface for building Web Components, that re
 existing browser APIs. Tram-Deco is an experiment to determine the value of a declarative interface for building Web
 Components, without the addition of APIs that don't already exist.
 
-<img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads">
-<img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
+<img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads"> <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
 <a href="https://unpkg.com/tram-deco@5/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-960B-006369.svg?style=flat" alt="Gzipped Size"></a>
 <a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License"></a>
 <a href="https://discord.gg/dpBXAQC"><img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord"></a>
