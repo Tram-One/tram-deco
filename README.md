@@ -6,8 +6,9 @@ Tram-Deco provides a more elegant interface for building Web Components, that re
 existing browser APIs. Tram-Deco is an experiment to determine the value of a declarative interface for building Web
 Components, without the addition of APIs that don't already exist.
 
-<img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads"> <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
-<a href="https://unpkg.com/tram-deco@4/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-800B-006369.svg?style=flat" alt="Gzipped Size"></a>
+<img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads">
+<img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
+<a href="https://unpkg.com/tram-deco@5/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-000B-006369.svg?style=flat" alt="Gzipped Size"></a>
 <a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License"></a>
 <a href="https://discord.gg/dpBXAQC"><img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord"></a>
 <a href="https://codepen.io/pen?template=JjzQmaL"><img src="https://img.shields.io/badge/codepen-template-DD6369.svg?style=flat" alt="Codepen Template"></a>
@@ -16,7 +17,7 @@ Components, without the addition of APIs that don't already exist.
 
 ```html
 <!-- include the Tram-Deco library -->
-<script src="https://unpkg.com/tram-deco@4"></script>
+<script src="https://unpkg.com/tram-deco@5"></script>
 <script>
   TramDeco.watch();
 </script>
@@ -42,7 +43,7 @@ Components, without the addition of APIs that don't already exist.
     </template>
 
     <!-- scripts, that let you define lifecycle methods -->
-    <script td-connectedcallback>
+    <script td-method="connectedCallback">
       this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
         document.title = this.textContent || 'Hello World';
       });
@@ -68,7 +69,7 @@ There are other ways to build components listed in the JS API section below, but
 component definitions in your project.
 
 ```html
-<script src="https://unpkg.com/tram-deco@4"></script>
+<script src="https://unpkg.com/tram-deco@5"></script>
 <script>
   TramDeco.watch();
 </script>
@@ -77,7 +78,7 @@ component definitions in your project.
 If you want the minified version you can point to that instead:
 
 ```html
-<script src="https://unpkg.com/tram-deco@4/tram-deco.min.js"></script>
+<script src="https://unpkg.com/tram-deco@5/tram-deco.min.js"></script>
 ```
 
 ## API
@@ -90,7 +91,7 @@ Tram-Deco exposes several different API methods that you can call to build Web C
 <dt><code>TramDeco.watch()</code></dt>
 <dd>
 
-The most straight forward way to build Web Component definitions. The `watch()` function starts a mutation observer that
+The most straight-forward way to build Web Component definitions. The `watch()` function starts a mutation observer that
 watches for template tags with the `td-definitions` attribute. When these appear in the DOM, Tram-Deco will process
 them, and build the component definitions inside. When it finishes processing these, it updates the template with an
 attribute `defined`.
@@ -142,49 +143,21 @@ These attributes can be used to provide logic for different life cycle events of
 standard API for Web Components.
 
 <dl>
-<dt><code>td-observedattributes</code></dt>
+<dt><code>td-property="propertyName"</code></dt>
 <dd>
 
-Attribute to be used on a custom element tag for your component definition. This attribute defines the values for the
-static `observedAttributes` on the component, and drives the `attributeChangedCallback` for your component. It should be
-a space delimited list of values.
+Attribute to be used on a `script` tag in your component definition. This assigned property name will be attached to the
+element as a static property, and can be useful for adding `observedAttributes`, `formAssociated`, `disableInternals`,
+or `disableShadow`. You can also define custom static properties for your element.
 
 </dd>
-<dt><code>td-constructor</code></dt>
+<dt><code>td-method="methodName"</code></dt>
 <dd>
 
-Attribute to be used on a `script` tag in your component definition. This script hooks into the `constructor` method,
-and will be called when the element is being constructed, after `super()` and after we have cloned the content into the
-shadow root of the element.
-
-</dd>
-<dt><code>td-connectedcallback</code></dt>
-<dd>
-
-Attribute to be used on a `script` tag in your component definition. This script hooks into the `connectedCallback`
-method, and will be called when the element is appended to the DOM.
-
-</dd>
-<dt><code>td-disconnectedcallback</code></dt>
-<dd>
-
-Attribute to be used on a `script` tag in your component definition. This script hooks into the `disconnectedCallback`
-method, and will be called when the element is removed from the DOM.
-
-</dd>
-<dt><code>td-adoptedcallback</code></dt>
-<dd>
-
-Attribute to be used on a `script` tag in your component definition. This script hooks into the `adoptedCallback`
-method, and will be called when the element moves between documents.
-
-</dd>
-<dt><code>td-attributechangedcallback</code></dt>
-<dd>
-
-Attribute to be used on a `script` tag in your component definition. This script hooks into the
-`attributeChangedCallback` method, and will be called when one of the element's attributes are added, removed, or
-updated.
+Attribute to be used on a `script` tag in your component definition. The assigned method name will be attached to the
+element, and can be useful for adding to the `constructor`, or setting other Web Component APIs, such as
+`connectedCallback`, `disconnectedCallback`, `adoptedCallback`, or `attributeChangedCallback`. You can also define
+custom methods for your element.
 
 </dd>
 </dl>
@@ -192,21 +165,24 @@ updated.
 #### Example Using Component API
 
 ```html
-<script src="https://unpkg.com/tram-deco@4"></script>
+<script src="https://unpkg.com/tram-deco@5"></script>
 <script>
   TramDeco.watch();
 </script>
 
 <template td-definitions>
-  <!-- td-observedattributes, to watch for attribute changes on count -->
-  <my-counter td-observedattributes="count">
+  <my-counter>
+    <!-- observed attributes, to watch for attribute changes on count -->
+    <script td-property="observedAttributes">
+      ['count'];
+    </script>
+
     <template shadowrootmode="open" shadowrootdelegatesfocus>
       <button><slot>Counter</slot>: <span>0</span></button>
     </template>
 
     <!-- when we mount this component, add an event listener -->
-    <script td-connectedcallback>
-      console.log('Counter Mounted!', this);
+    <script td-method="connectedCallback">
       const button = this.shadowRoot.querySelector('button');
       button.addEventListener('click', (event) => {
         const newCount = parseInt(this.getAttribute('count')) + 1;
@@ -215,7 +191,7 @@ updated.
     </script>
 
     <!-- when the count updates, update the template -->
-    <script td-attributechangedcallback>
+    <script td-method="attributeChangedCallback">
       const span = this.shadowRoot.querySelector('span');
       span.textContent = this.getAttribute('count');
     </script>

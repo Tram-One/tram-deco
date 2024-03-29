@@ -31,7 +31,7 @@
 		</span>
 	</template>
 
-	<script td-constructor>
+	<script td-method="constructor">
 		this.control = this.shadowRoot.querySelector('[part="control"]');
 		this.content = this.shadowRoot.querySelector('[part="content"]');
 
@@ -44,7 +44,7 @@
 		};
 	</script>
 
-	<script td-connectedCallback>
+	<script td-method="connectedCallback">
 		this.control.addEventListener('click', this.reveal, { once: true });
 		this.control.addEventListener('keydown', (event) => {
 			if (event.key === ' ' || event.key === 'Enter') {

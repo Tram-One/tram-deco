@@ -1,15 +1,6 @@
 // Tram-Deco - declarative custom elements, using declarative shadow DOM
 
 class TramDeco {
-	// scripts that users can define in their elements
-	static apiScripts = {
-		constructor: 'td-constructor',
-		connectedCallback: 'td-connectedcallback',
-		disconnectedCallback: 'td-disconnectedcallback',
-		adoptedCallback: 'td-adoptedcallback',
-		attributeChangedCallback: 'td-attributechangedcallback',
-	};
-
 	// function to process new nodes (from a mutation observer) and make component definitions
 	static processTemplates(mutationRecords) {
 		mutationRecords.forEach((mutationRecord) => {
@@ -39,9 +30,6 @@ class TramDeco {
 		// set the tag name to the element name in the template
 		const tagName = newElement.tagName.toLowerCase();
 
-		// observed attributes, a space delimited set of attributes on the element being defined
-		const observedAttributes = (newElement.getAttribute('td-observedattributes') || '').split(' ');
-
 		// pull the shadow root (we expect this to have been built by DSD)
 		const shadowRoot = newElement.shadowRoot;
 
@@ -52,59 +40,48 @@ class TramDeco {
 		const range = document.createRange();
 		range.selectNodeContents(shadowRoot);
 
-		// pull script tags with specific behavior that we want to use in our component
-		const elScripts = {};
-		Object.entries(TramDeco.apiScripts).forEach(([key, elementAttribute]) => {
-			const element = newElement.querySelector(`script[${elementAttribute}]`);
-			const script = element?.textContent;
-			elScripts[key] = script;
+		// TDElement class, which has the core functionality that all Tram-Deco
+		// Web Components will need
+		class BaseTDElement extends HTMLElement {
+			constructor() {
+				super();
+
+				// attach the shadow root, with the options used in the DSD
+				this.attachShadow({ mode, delegatesFocus });
+
+				// clone the shadow root content
+				this.shadowRoot.append(range.cloneContents());
+			}
+		}
+
+		// we need to pull the constructor method separately
+		const modifiedConstructor = newElement.querySelector(`script[td-method="constructor"]`);
+		class TDElement extends BaseTDElement {
+			constructor() {
+				super();
+				eval(modifiedConstructor?.textContent || '');
+			}
+		}
+
+		// pull all other script tags for methods, and add them to the prototype
+		newElement.querySelectorAll(`script[td-method]`).forEach((lifecycleScript) => {
+			const methodName = lifecycleScript.getAttribute('td-method');
+			TDElement.prototype[methodName] = function () {
+				eval(lifecycleScript.textContent);
+			};
 		});
 
-		customElements.define(
-			tagName,
-			class TDElement extends HTMLElement {
-				static observedAttributes = observedAttributes;
+		// pull script tags for properties, and add them to the class as getters
+		newElement.querySelectorAll(`script[td-property]`).forEach((propertyScript) => {
+			const propertyName = propertyScript.getAttribute('td-property');
+			Object.defineProperty(TDElement, propertyName, {
+				get: function () {
+					return eval(propertyScript.textContent);
+				},
+			});
+		});
 
-				constructor() {
-					super();
-
-					// attach the shadow root, with the options used in the DSD
-					this.attachShadow({ mode, delegatesFocus });
-
-					// clone the shadow root content
-					this.shadowRoot.append(range.cloneContents());
-
-					// if we were told to do anything else on construction, do it here
-					if (elScripts.constructor) {
-						eval(elScripts.constructor);
-					}
-				}
-
-				connectedCallback() {
-					if (elScripts.connectedCallback) {
-						eval(elScripts.connectedCallback);
-					}
-				}
-
-				disconnectedCallback() {
-					if (elScripts.disconnectedCallback) {
-						eval(elScripts.disconnectedCallback);
-					}
-				}
-
-				adoptedCallback() {
-					if (elScripts.adoptedCallback) {
-						eval(elScripts.adoptedCallback);
-					}
-				}
-
-				attributeChangedCallback() {
-					if (elScripts.attributeChangedCallback) {
-						eval(elScripts.attributeChangedCallback);
-					}
-				}
-			},
-		);
+		customElements.define(tagName, TDElement);
 	}
 
 	// function to start mutation observer that processes definition templates

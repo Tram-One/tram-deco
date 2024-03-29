@@ -25,18 +25,71 @@
 		</template>
 
 		<!-- scripts, that run when the component mounts -->
-		<script td-connectedcallback>
+		<script td-method="connectedCallback">
 			this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
 				document.title = this.textContent || 'Hello World';
 			});
 		</script>
 	</custom-title>
+
+	<callout-alert>
+		<script td-property="observedAttributes">
+			['collapsed'];
+		</script>
+		<template shadowrootmode="open">
+			<style>
+				div {
+					display: flex;
+					flex-direction: column;
+					border-left: solid 3px rgb(47, 129, 247);
+					background: rgba(47, 129, 247, 0.1);
+					padding: 0.5em;
+					gap: 0.3em;
+				}
+
+				[name='title'] {
+					font-weight: bold;
+					color: rgb(47, 129, 247);
+				}
+
+				:host([collapsed]) #content {
+					display: none;
+				}
+			</style>
+
+			<div>
+				<span>
+					<slot name="title"></slot>
+					<button id="collapse">collapse</button>
+				</span>
+				<span id="content"><slot></slot></span>
+			</div>
+		</template>
+
+		<script td-method="constructor">
+			this.collapse = this.shadowRoot.getElementById('collapse');
+		</script>
+
+		<script td-method="connectedCallback">
+			this.collapse.addEventListener('click', () => {
+				this.toggleAttribute('collapsed');
+			});
+		</script>
+
+		<script td-method="attributeChangedCallback">
+			this.collapse.textContent = this.hasAttribute('collapsed') ? 'expand' : 'collapse';
+		</script>
+	</callout-alert>
 </template>
 
 <!-- template to be defined later with TramDeco.define() -->
 <template id="counter-definition">
 	<!-- counter example -->
-	<my-counter td-observedattributes="count">
+	<my-counter>
+		<script td-property="observedAttributes">
+			['count'];
+		</script>
+
 		<template shadowrootmode="open" shadowrootdelegatesfocus>
 			<style>
 				button {
@@ -47,15 +100,15 @@
 			<button><slot>Counter</slot>: <span>0</span></button>
 		</template>
 
-		<script td-connectedcallback>
-			console.log('Counter Mounted!', this);
+		<script td-method="connectedCallback">
 			const button = this.shadowRoot.querySelector('button');
 			button.addEventListener('click', (event) => {
 				const newCount = parseInt(this.getAttribute('count')) + 1;
 				this.setAttribute('count', newCount);
 			});
 		</script>
-		<script td-attributechangedcallback>
+
+		<script td-method="attributeChangedCallback">
 			const span = this.shadowRoot.querySelector('span');
 			span.textContent = this.getAttribute('count');
 		</script>
@@ -74,4 +127,8 @@
 <custom-title>Tram-Deco is Cool!</custom-title>
 <my-counter count="0"></my-counter>
 <my-counter count="12">Special</my-counter>
+<callout-alert collapsed>
+	<span slot="title">Import Alert</span>
+	<span>The following spoiler only works on browsers that support <code>Document.parseHTMLUnsafe</code></span>
+</callout-alert>
 This is some <spoiler-tag>spoiler</spoiler-tag> content.
