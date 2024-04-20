@@ -1,16 +1,26 @@
 # Tram-Deco
 
+<div style="display: flex; gap: 1em;">
+
+  <img src="./logo.png" width="200px" alt="Tram-Deco logo, minimalistic icon that looks like the front of a red trolly car, with a yellow tinted window and three headlights, made of simple geometric shapes">
+
+  <div>
+
 _Declarative Custom Elements using native Web Component APIs and specs._
 
 Tram-Deco provides a more elegant interface for building Web Components, that remains as close as possible to the
 existing browser APIs. Tram-Deco is an experiment to determine the value of a declarative interface for building Web
 Components, without the addition of APIs that don't already exist.
 
+<!-- prettier-ignore -->
 <img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads"> <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
 <a href="https://unpkg.com/tram-deco@5/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-960B-006369.svg?style=flat" alt="Gzipped Size"></a>
 <a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License"></a>
 <a href="https://discord.gg/dpBXAQC"><img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord"></a>
 <a href="https://codepen.io/pen?template=JjzQmaL"><img src="https://img.shields.io/badge/codepen-template-DD6369.svg?style=flat" alt="Codepen Template"></a>
+
+  </div>
+</div>
 
 ## Example
 
