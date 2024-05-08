@@ -1,29 +1,12 @@
 // Tram-Deco - declarative custom elements, using declarative shadow DOM
 
 class TramDeco {
-	// function to process new nodes (from a mutation observer) and make component definitions
-	static processTemplates(mutationRecords) {
-		mutationRecords.forEach((mutationRecord) => {
-			mutationRecord.addedNodes.forEach((newNode) => {
-				// check if the previous element is a definition template
-				// we wait until we are in the next element (most likely a #text node)
-				// because that will confirm that the element has been completely parsed
-				if (newNode.previousSibling?.matches?.('[td-definitions]:not(defined)')) {
-					TramDeco.processTemplate(newNode.previousSibling);
-				}
-			});
-		});
-	}
-
 	// function to process template tags that have component definitions
 	static processTemplate(template) {
 		// for each definition in the template, define a web component
 		[...template.content.children].forEach((newElement) => {
 			TramDeco.define(newElement);
 		});
-
-		// mark the template as having been processed
-		template.setAttribute('defined', '');
 	}
 
 	static define(newElement) {
@@ -82,33 +65,5 @@ class TramDeco {
 		});
 
 		customElements.define(tagName, TDElement);
-	}
-
-	// function to start mutation observer that processes definition templates
-	static watch() {
-		// check if any existing definition templates already exist (if they do, process them)
-		const definitions = document.querySelectorAll('[td-definitions]:not(defined)');
-		[...definitions].forEach((definition) => TramDeco.processTemplate(definition));
-
-		// set up mutation observer for definition templates that might appear later
-		const observer = new MutationObserver(TramDeco.processTemplates);
-		observer.observe(document, { subtree: true, childList: true });
-
-		// clean up the mutation observer once the document finishes loading
-		// (we don't expect more elements to load at this point)
-		window.addEventListener('DOMContentLoaded', () => {
-			observer.disconnect();
-		});
-	}
-
-	// function to pull an external html definition
-	static async import(componentPath) {
-		const componentResult = await fetch(componentPath);
-		const componentContent = await componentResult.text();
-		const fragment = Document.parseHTMLUnsafe(componentContent);
-
-		[...fragment.body.children].forEach((child) => {
-			TramDeco.define(child);
-		});
 	}
 }

@@ -10,7 +10,7 @@ Components, without the addition of APIs that don't already exist.
 
 <!-- prettier-ignore -->
 <img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads"> <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
-<a href="https://unpkg.com/tram-deco@5/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-960B-006369.svg?style=flat" alt="Gzipped Size"></a>
+<a href="https://unpkg.com/tram-deco@6/tram-deco.min.js"><img src="https://img.shields.io/badge/gzip-880B-006369.svg?style=flat" alt="Gzipped Size"></a>
 <a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License"></a>
 <a href="https://discord.gg/dpBXAQC"><img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord"></a>
 <a href="https://codepen.io/pen?template=JjzQmaL"><img src="https://img.shields.io/badge/codepen-template-DD6369.svg?style=flat" alt="Codepen Template"></a>
@@ -19,13 +19,10 @@ Components, without the addition of APIs that don't already exist.
 
 ```html
 <!-- include the Tram-Deco library -->
-<script src="https://unpkg.com/tram-deco@5"></script>
-<script>
-  TramDeco.watch();
-</script>
+<script src="https://unpkg.com/tram-deco@6"></script>
 
 <!-- define some web components -->
-<template td-definitions>
+<template id="componentDefinitions">
   <!-- definition for a custom-title tag! -->
   <custom-title>
     <!-- declarative shadow dom for the insides -->
@@ -53,6 +50,11 @@ Components, without the addition of APIs that don't already exist.
   </custom-title>
 </template>
 
+<!-- process the template to generate new definitions -->
+<script>
+  TramDeco.processTemplate(componentDefinitions);
+</script>
+
 <!-- use our new element! -->
 <custom-title>Tram-Deco is Cool!</custom-title>
 ```
@@ -61,85 +63,89 @@ Components, without the addition of APIs that don't already exist.
 
 ## How to use
 
-> [!important]
->
-> Tram-Deco depends on declarative shadow DOM, which at the time of writing is not available on all browsers. Check
-> [caniuse.com](https://caniuse.com/declarative-shadow-dom) to understand browser support and coverage here.
+There are two ways to use Tram-Deco in your project - you can either have component definitions in your served HTML
+template (in template tags), or you can export the components as part of a build step to be imported with script tags.
 
-The most straight-forward way to use Tram-Deco is to include the script in your project, and call `TramDeco.watch()`.
-There are other ways to build components listed in the JS API section below, but this will automatically find and build
-component definitions in your project.
+### Template Component Definitions
+
+If you don't want a build step, or are just building components for a dedicated static page, you can do the following to
+write component definitions in your main template:
+
+Include the Tram-Deco library (you can point to either `tram-deco.js` or `tram-deco.min.js`)
 
 ```html
-<script src="https://unpkg.com/tram-deco@5"></script>
+<script src="https://unpkg.com/tram-deco@6/tram-deco.min.js"></script>
+```
+
+Create a template tag with your component definitions, and then use Tram-Deco to process that template
+
+```html
+<template id="myDefinitions">
+  <!-- component definitions -->
+</template>
+
 <script>
-  TramDeco.watch();
+  TramDeco.processTemplate(myDefinitions);
 </script>
 ```
 
-If you want the minified version you can point to that instead:
+### Export JS Definition
+
+> [!important]
+>
+> Tram-Deco import depends on `setHTMLUnsafe`, which is a recently released feature. Check
+> [caniuse.com](https://caniuse.com/?search=setHTMLUnsafe) to understand browser support and coverage here.
+
+If you want to export your component definition, to be used in other projects, or to organize the components in
+different files, you can do the following:
+
+Create a component definition file (`.html`) - this can include as many top-level component definitions as you'd like.
 
 ```html
-<script src="https://unpkg.com/tram-deco@5/tram-deco.min.js"></script>
+<!-- my-counter.html -->
+<my-counter>
+  <template shadowrootmode="open">
+    <!-- ... -->
+  </template>
+</my-counter>
+```
+
+Run the following command in the command line, or as part of a build step:
+
+```sh
+npx tram-deco export-components my-counter.html
+```
+
+This will create a JS file that can be imported using a standard script tag:
+
+```html
+<script src="./my-counter.js">
 ```
 
 ## API
 
 ### JS API
 
-Tram-Deco exposes several different API methods that you can call to build Web Components, depending on your use case.
-
 <dl>
-<dt><code>TramDeco.watch()</code></dt>
+<dt><code>TramDeco.processTemplate(templateTag)</code></dt>
 <dd>
 
-The most straight-forward way to build Web Component definitions. The `watch()` function starts a mutation observer that
-watches for template tags with the `td-definitions` attribute. When these appear in the DOM, Tram-Deco will process
-them, and build the component definitions inside. When it finishes processing these, it updates the template with an
-attribute `defined`.
+The `processTemplate` function takes in a single template tag with several component definitions, and builds Web
+Component definitions for all of them in the global custom elements registry.
 
 </dd>
+
 <dt><code>TramDeco.define(elementDefinition)</code></dt>
 <dd>
 
-The `define` function takes in a single tag with a declarative shadow dom template, and turns it into a Web Component
-definition. In the above example, it is everything inside the `td-definitions` template. This is useful if you have a
-single component you would like to define, potentially with a specific version of Tram-Deco.
-
-</dd>
-<dt><code>TramDeco.import(componentPath)</code></dt>
-<dd>
-
-> [!warning]
->
-> Importing by path requires `Document.parseHTMLUnsafe` which is only available (at the time of writing) on technical
-> previews of most browsers.
-
-The `import` function takes in a path to a component definition file, and defines all component definitions inside as
-new Web Component definitions. In the above example, it is everything inside the `td-definitions` template. This is
-useful if you want to save your component definitions in separate files.
+The `define` function takes in a single element definition and builds a Web Component definition for the global custom
+elements registry. It is the underlying method used in `processTemplate`, and probably does not need to be called in
+isolation.
 
 </dd>
 </dl>
 
-### HTML API
-
-Tram-Deco exposes the following attributes to help you build and configure declarative web components
-
-#### Top Level API
-
-<dl>
-<dt><code>td-definitions</code></dt>
-<dd>
-
-Attribute to be used on the `<template>` surrounding your component definitions. You can have multiple templates, or
-just a single one for all of your definitions. These template tags will be picked up automatically with
-`TramDeco.watch()`.
-
-</dd>
-</dl>
-
-#### Component API
+### Component API
 
 These attributes can be used to provide logic for different life cycle events of your component. They follow the
 standard API for Web Components.
@@ -167,12 +173,9 @@ custom methods for your element.
 #### Example Using Component API
 
 ```html
-<script src="https://unpkg.com/tram-deco@5"></script>
-<script>
-  TramDeco.watch();
-</script>
+<script src="https://unpkg.com/tram-deco@6"></script>
 
-<template td-definitions>
+<template id="myCounter">
   <my-counter>
     <!-- observed attributes, to watch for attribute changes on count -->
     <script td-property="observedAttributes">
@@ -199,6 +202,10 @@ custom methods for your element.
     </script>
   </my-counter>
 </template>
+
+<script>
+  TramDeco.processTemplate(myCounter);
+</script>
 
 <my-counter count="0">Tram-Deco</my-counter>
 ```

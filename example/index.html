@@ -1,11 +1,6 @@
 <script src="../tram-deco.js"></script>
 
-<script>
-	TramDeco.watch();
-</script>
-
-<!-- template that will be picked up by TramDeco.watch() -->
-<template td-definitions>
+<template id="elementDefinitions">
 	<!-- definition for a custom-title tag! -->
 	<custom-title>
 		<!-- declarative shadow dom for the insides -->
@@ -80,10 +75,7 @@
 			this.collapse.textContent = this.hasAttribute('collapsed') ? 'expand' : 'collapse';
 		</script>
 	</callout-alert>
-</template>
 
-<!-- template to be defined later with TramDeco.define() -->
-<template id="counter-definition">
 	<!-- counter example -->
 	<my-counter>
 		<script td-property="observedAttributes">
@@ -116,19 +108,17 @@
 </template>
 
 <script>
-	TramDeco.define(document.getElementById('counter-definition').content.querySelector('my-counter'));
+	TramDeco.processTemplate(elementDefinitions);
 </script>
 
 <!-- import definition from external file -->
-<script>
-	TramDeco.import('./spoiler-tag.html');
-</script>
+<script src="./spoiler-tag.js"></script>
 
 <custom-title>Tram-Deco is Cool!</custom-title>
-<my-counter count="0"></my-counter>
-<my-counter count="12">Special</my-counter>
+<my-counter id="a" count="0"></my-counter>
+<my-counter id="b" count="12">Special</my-counter>
 <callout-alert collapsed>
 	<span slot="title">Import Alert</span>
-	<span>The following spoiler only works on browsers that support <code>Document.parseHTMLUnsafe</code></span>
+	<span>The following spoiler only works on browsers that support <code>setHTMLUnsafe</code></span>
 </callout-alert>
-This is some <spoiler-tag>spoiler</spoiler-tag> content.
+This is some <spoiler-tag>mystery</spoiler-tag> content.
