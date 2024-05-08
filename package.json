@@ -5,12 +5,18 @@
 	"main": "tram-deco.js",
 	"files": [
 		"tram-deco.js",
-		"tram-deco.min.js"
+		"tram-deco.min.js",
+		"scripts/export-component.js"
 	],
+	"bin": {
+		"export-components": "./scripts/export-components.js"
+	},
 	"scripts": {
 		"start": "serve . -p 3000",
 		"prepublishOnly": "npm run build",
 		"build": "uglifyjs tram-deco.js -o tram-deco.min.js -c -m",
+		"test-export": "node scripts/export-components.js example/spoiler-tag.html -o example/spoiler-tag.js",
+		"pretest": "npm run build && npm run test-export",
 		"test": "cypress open"
 	},
 	"keywords": [],
