@@ -1,3 +1,4 @@
+<!-- include main library, so we have access to `TramDeco` class (used for processing the element definition template) -->
 <script src="../tram-deco.js"></script>
 
 <template id="elementDefinitions">
@@ -108,12 +109,16 @@
 </template>
 
 <script>
+	// processTemplate call, pointed to the template with component definitions
+	//  to define them on the global registry
 	TramDeco.processTemplate(elementDefinitions);
 </script>
 
 <!-- import definition from external file -->
+<!-- this definition must be built using `npx tram-deco export-components ./spoiler-tag.html` -->
 <script src="./spoiler-tag.js"></script>
 
+<!-- include the defined components in the main HTML body -->
 <custom-title>Tram-Deco is Cool!</custom-title>
 <my-counter id="a" count="0"></my-counter>
 <my-counter id="b" count="12">Special</my-counter>
