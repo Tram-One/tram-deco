@@ -14,6 +14,7 @@ Components, without the addition of APIs that don't already exist.
 <a href="https://github.com/Tram-One/tram-deco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tram-deco.svg" alt="License"></a>
 <a href="https://discord.gg/dpBXAQC"><img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord"></a>
 <a href="https://codepen.io/pen?template=JjzQmaL"><img src="https://img.shields.io/badge/codepen-template-DD6369.svg?style=flat" alt="Codepen Template"></a>
+<a href="https://chatgpt.com/g/g-wTNI3WZS6-tram-deco"><img src="https://img.shields.io/badge/gpt-tram--deco-FFCC49.svg?style=flat" alt="Codepen Template"></a>
 
 ## Example
 
