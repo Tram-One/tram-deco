@@ -38,5 +38,26 @@ describe('Tram-Deco Example Components', () => {
 		cy.get('spoiler-tag').shadow().find('[aria-hidden="true"]').should('exist');
 		cy.get('spoiler-tag').click();
 		cy.get('spoiler-tag').shadow().find('[aria-hidden="false"]').should('exist');
+
+		/* validate that button that implements a shadow DOM from a parent with none works as expected */
+		cy.get('red-removable-button#r').should('exist');
+		cy.get('red-removable-button#r').click();
+		cy.get('red-removable-button#r').should('not.exist');
+
+		/* validate that extended counters with different shadow DOM work as expected */
+		cy.get('my-red-counter#d').should('have.attr', 'count', '10');
+		cy.get('my-red-counter#d').click();
+		cy.get('my-red-counter#d').should('have.attr', 'count', '11');
+
+		/* THE FOLLOWING TWO TESTS DO NOT WORK IN CHROMIUM BROWSERS */
+		/* validate that extended counters with nothing different work as expected */
+		cy.get('my-copied-counter#c').should('have.attr', 'count', '15');
+		cy.get('my-copied-counter#c').shadow().find('button').click();
+		cy.get('my-copied-counter#c').should('have.attr', 'count', '16');
+
+		/* validate that extended counters with different callbacks work as expected */
+		cy.get('my-decrementing-counter#e').should('have.attr', 'count', '5');
+		cy.get('my-decrementing-counter#e').click();
+		cy.get('my-decrementing-counter#e').should('have.attr', 'count', '4');
 	});
 });

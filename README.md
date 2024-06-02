@@ -148,14 +148,21 @@ isolation.
 
 ### Component API
 
-These attributes can be used to provide logic for different life cycle events of your component. They follow the
-standard API for Web Components.
+These attributes can be used to provide or inherit logic for different life cycle events of your component. They follow
+the standard API for Web Components.
 
 <dl>
+<dt><code>td-extends="tag-name"</code></dt>
+<dd>
+
+Attribute to be used on the top-level definition tag. The class associated with the `tag-name` will be used as a parent
+class when building this Web Component definition. That tag must be already registered in the `customElements` registry.
+
+</dd>
 <dt><code>td-property="propertyName"</code></dt>
 <dd>
 
-Attribute to be used on a `script` tag in your component definition. This assigned property name will be attached to the
+Attribute to be used on a `script` tag in your component definition. The assigned property name will be attached to the
 element as a static property, and can be useful for adding `observedAttributes`, `formAssociated`, `disableInternals`,
 or `disableShadow`. You can also define custom static properties for your element.
 
@@ -167,6 +174,11 @@ Attribute to be used on a `script` tag in your component definition. The assigne
 element, and can be useful for adding to the `constructor`, or setting other Web Component APIs, such as
 `connectedCallback`, `disconnectedCallback`, `adoptedCallback`, or `attributeChangedCallback`. You can also define
 custom methods for your element.
+
+> [!tip]
+>
+> If you are using `attributeChangedCallback` you can access the parameters (`name`, `oldValue`, and `newValue`) using
+> the `arguments` keyword. See the example below to see how this works!
 
 </dd>
 </dl>
@@ -198,8 +210,11 @@ custom methods for your element.
 
     <!-- when the count updates, update the template -->
     <script td-method="attributeChangedCallback">
-      const span = this.shadowRoot.querySelector('span');
-      span.textContent = this.getAttribute('count');
+      const [name, oldValue, newValue] = arguments;
+      if (name === 'count') {
+        const span = this.shadowRoot.querySelector('span');
+        span.textContent = newValue;
+      }
     </script>
   </my-counter>
 </template>

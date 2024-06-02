@@ -73,7 +73,10 @@
 		</script>
 
 		<script td-method="attributeChangedCallback">
-			this.collapse.textContent = this.hasAttribute('collapsed') ? 'expand' : 'collapse';
+			const [name, oldValue, newValue] = arguments;
+			if (name === 'collapsed') {
+				this.collapse.textContent = this.hasAttribute('collapsed') ? 'expand' : 'collapse';
+			}
 		</script>
 	</callout-alert>
 
@@ -102,10 +105,61 @@
 		</script>
 
 		<script td-method="attributeChangedCallback">
-			const span = this.shadowRoot.querySelector('span');
-			span.textContent = this.getAttribute('count');
+			const [name, oldValue, newValue] = arguments;
+			if (name === 'count') {
+				const span = this.shadowRoot.querySelector('span');
+				span.textContent = newValue;
+			}
 		</script>
 	</my-counter>
+
+	<!-- extended counter, does nothing addition -->
+	<my-copied-counter td-extends="my-counter"></my-copied-counter>
+
+	<!-- extended counter, changes the dom layout -->
+	<my-red-counter td-extends="my-counter">
+		<template shadowrootmode="open" shadowrootdelegatesfocus>
+			<style>
+				button {
+					cursor: pointer;
+					color: red;
+				}
+			</style>
+			<button>TOTAL CLICKS - <span>0</span></button>
+		</template>
+	</my-red-counter>
+
+	<!-- extended counter, goes down instead of up -->
+	<my-decrementing-counter td-extends="my-counter">
+		<script td-method="connectedCallback">
+			const button = this.shadowRoot.querySelector('button');
+			button.addEventListener('click', (event) => {
+				const newCount = parseInt(this.getAttribute('count')) - 1;
+				this.setAttribute('count', newCount);
+			});
+		</script>
+	</my-decrementing-counter>
+
+	<!-- button that extends an action-only interface -->
+	<removable-button>
+		<script td-method="connectedCallback">
+			this.button = this.shadowRoot.querySelector('button');
+			this.button.addEventListener('click', () => {
+				this.remove();
+			});
+		</script>
+	</removable-button>
+
+	<red-removable-button td-extends="removable-button">
+		<template shadowrootmode="open">
+			<style>
+				button {
+					color: red;
+				}
+			</style>
+			<button>Click Me</button>
+		</template>
+	</red-removable-button>
 </template>
 
 <script>
@@ -122,6 +176,10 @@
 <custom-title>Tram-Deco is Cool!</custom-title>
 <my-counter id="a" count="0"></my-counter>
 <my-counter id="b" count="12">Special</my-counter>
+<my-copied-counter id="c" count="15">Copied Counter</my-copied-counter>
+<my-red-counter id="d" count="10"></my-red-counter>
+<my-decrementing-counter id="e" count="5">Decrementing Counter</my-decrementing-counter>
+<red-removable-button id="r"></red-removable-button>
 <callout-alert collapsed>
 	<span slot="title">Import Alert</span>
 	<span>The following spoiler only works on browsers that support <code>setHTMLUnsafe</code></span>
