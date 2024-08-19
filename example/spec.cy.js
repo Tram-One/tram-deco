@@ -49,15 +49,16 @@ describe('Tram-Deco Example Components', () => {
 		cy.get('my-red-counter#d').click();
 		cy.get('my-red-counter#d').should('have.attr', 'count', '11');
 
-		/* THE FOLLOWING TWO TESTS DO NOT WORK IN CHROMIUM BROWSERS */
 		/* validate that extended counters with nothing different work as expected */
 		cy.get('my-copied-counter#c').should('have.attr', 'count', '15');
-		cy.get('my-copied-counter#c').shadow().find('button').click();
+		// position: top to resolve issue with elementsFromPoint resolution issue with web-components
+		// see: https://github.com/cypress-io/cypress/issues/19260
+		cy.get('my-copied-counter#c').click({ position: 'top' });
 		cy.get('my-copied-counter#c').should('have.attr', 'count', '16');
 
 		/* validate that extended counters with different callbacks work as expected */
 		cy.get('my-decrementing-counter#e').should('have.attr', 'count', '5');
-		cy.get('my-decrementing-counter#e').click();
+		cy.get('my-decrementing-counter#e').click({ position: 'top' });
 		cy.get('my-decrementing-counter#e').should('have.attr', 'count', '4');
 	});
 });
