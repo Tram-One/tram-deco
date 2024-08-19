@@ -17,7 +17,9 @@
 		"build": "uglifyjs tram-deco.js -o tram-deco.min.js -c -m",
 		"test-export": "node scripts/export-components.js example/spoiler-tag.html -o example/spoiler-tag.js",
 		"pretest": "npm run build && npm run test-export",
-		"test": "cypress open"
+		"test": "cypress open",
+		"pretest:ci": "npm run pretest",
+		"test:ci": "cypress run"
 	},
 	"keywords": [],
 	"author": {
