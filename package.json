@@ -19,7 +19,7 @@
 		"pretest": "npm run build && npm run test-export",
 		"test": "cypress open",
 		"pretest:ci": "npm run pretest",
-		"test:ci": "cypress run --browser `which electron`"
+		"test:ci": "cypress run --browser npm-electron"
 	},
 	"keywords": [],
 	"author": {
@@ -31,6 +31,7 @@
 	"devDependencies": {
 		"cypress": "^13.10.0",
 		"electron": "^32.0.1",
+		"playwright-webkit": "^1.46.1",
 		"prettier": "^3.2.4",
 		"serve": "^14.2.1",
 		"uglify-js": "^3.17.4"
