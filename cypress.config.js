@@ -5,5 +5,6 @@ module.exports = defineConfig({
 		specPattern: '**.cy.js',
 		supportFile: false,
 		includeShadowDom: true,
+		experimentalWebKitSupport: true,
 	},
 });

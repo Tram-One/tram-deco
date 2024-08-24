@@ -1,5 +1,8 @@
 # Dependency Directory
 node_modules
 
+# cypress artifacts
+cypress
+
 # minified output
 *.min.js

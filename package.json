@@ -28,6 +28,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"cypress": "^13.10.0",
+		"playwright-webkit": "^1.46.1",
 		"prettier": "^3.2.4",
 		"serve": "^14.2.1",
 		"uglify-js": "^3.17.4"
