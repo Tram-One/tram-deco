@@ -18,7 +18,6 @@ test.describe('Tram-Deco Example Components', () => {
 		// validate that the title shadowDOM is rendered as expected
 		const customTitle = page.locator('custom-title');
 		await expect(customTitle.locator('h1')).toBeVisible();
-		// await expect(customTitle).toHaveText('Tram-Deco is Cool!');
 		const renderedText = await getTextContent(customTitle);
 		expect(renderedText).toBe('Tram-Deco is Cool!');
 
