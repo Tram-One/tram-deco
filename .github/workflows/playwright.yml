@@ -15,11 +15,11 @@ jobs:
         with:
           node-version: '19'
 
-      - name: Install Playwright Browsers
-        run: npx playwright install
-
       - name: Install dependencies
         run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install
 
       - name: Run tests
         run: npm run test:ci
