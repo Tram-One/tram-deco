@@ -17,7 +17,8 @@
 		"build": "uglifyjs tram-deco.js -o tram-deco.min.js -c -m",
 		"test-export": "node scripts/export-components.js example/spoiler-tag.html -o example/spoiler-tag.js",
 		"pretest": "npm run build && npm run test-export",
-		"test": "cypress open"
+		"test": "playwright test --ui",
+		"test:ci": "playwright test"
 	},
 	"keywords": [],
 	"author": {
@@ -27,6 +28,8 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
+		"@playwright/test": "^1.46.1",
+		"@types/node": "^22.5.0",
 		"cypress": "^13.10.0",
 		"playwright-webkit": "^1.46.1",
 		"prettier": "^3.2.4",
