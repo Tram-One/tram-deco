@@ -1,6 +1,6 @@
 {
 	"name": "tram-deco",
-	"version": "6.1.0",
+	"version": "6.1.1",
 	"description": "Declarative Custom Elements using native Web Component APIs and specs",
 	"main": "tram-deco.js",
 	"files": [
@@ -20,7 +20,13 @@
 		"test": "playwright test --ui",
 		"test:ci": "playwright test"
 	},
-	"keywords": [],
+	"keywords": [
+		"web-component",
+		"html",
+		"declarative",
+		"dce",
+		"custom elements"
+	],
 	"author": {
 		"name": "Jesse Jurman",
 		"email": "j.r.jurman@gmail.com",

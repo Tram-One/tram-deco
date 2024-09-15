@@ -27,7 +27,10 @@ const coreLibrary = fs.readFileSync(path.join(__dirname, '../tram-deco.min.js'))
 
 const formattedDefinitions = componentDefinitions
 	.map((componentCode) => {
-		const formattedComponentCode = componentCode.replaceAll('`', '\\`').replaceAll('${', '\\${');
+		const formattedComponentCode = componentCode
+			.replaceAll('\\', '\\\\')
+			.replaceAll('`', '\\`')
+			.replaceAll('${', '\\${');
 		return formattedComponentCode;
 	})
 	.join('\n');
