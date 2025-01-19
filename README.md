@@ -5,8 +5,8 @@
 _Declarative Custom Elements using native Web Component APIs and specs._
 
 Tram-Deco provides a more elegant interface for building Web Components, that remains as close as possible to the
-existing browser APIs. Tram-Deco is an experiment to determine the value of a declarative interface for building Web
-Components, without the addition of APIs that don't already exist.
+existing browser APIs. Tram-Deco is a experiment to understand what a declarative interface for building Web Components
+might look like, without the addition of APIs that don't already exist.
 
 <!-- prettier-ignore -->
 <img src="https://img.shields.io/npm/dm/tram-deco.svg" alt="Downloads"> <img src="https://img.shields.io/npm/v/tram-deco.svg" alt="Version">
@@ -242,6 +242,16 @@ custom methods for your element.
 ```
 
 [Live on Codepen](https://codepen.io/JRJurman/pen/RwmbMmg)
+
+## Motivation
+
+Tram-Deco was written to showcase a potential implementation of Declarative Custom Elements that could be trivially
+adopted by browser implementers. While many alternatives exist, most include new custom APIs, behavior, or syntax that
+would necessitate discussions, deliberations, and implementation before making progress on the true goal.
+
+Tram-Deco strives to be as close to existing APIs as possible, so that the path to browser implementation is as direct
+as possible. While many libraries exist to make Web-Component creation easier and more elegant, this library exclusively
+highlights how we can leverage existing APIs to get to Declarative Custom Elements.
 
 ## contributions / discussions
 
