@@ -23,44 +23,64 @@ Components, without the addition of APIs that don't already exist.
 <script src="https://unpkg.com/tram-deco@6"></script>
 
 <!-- define some web components -->
-<template id="componentDefinitions">
-  <!-- definition for a custom-title tag! -->
-  <custom-title>
+<template id="definitions">
+  <!-- definition for a custom header tag -->
+  <header-anchor>
     <!-- declarative shadow dom for the insides -->
     <template shadowrootmode="open">
       <!-- styles, for just this element -->
       <style>
-        h1 {
-          color: blue;
+        a {
+          color: inherit;
+        }
+        ::slotted(*)::before {
+          content: '# ';
+          opacity: 0.3;
+        }
+        ::slotted(*:hover)::before {
+          opacity: 0.7;
+        }
+        a:not(:hover) {
+          text-decoration: none;
         }
       </style>
 
       <!-- dom, to show on the page -->
-      <h1>
-        <slot>Hello World</slot>
-      </h1>
-      <hr />
+      <a><slot></slot></a>
     </template>
 
-    <!-- scripts, that let you define lifecycle methods -->
-    <script td-method="connectedCallback">
-      this.shadowRoot.querySelector('slot').addEventListener('slotchange', () => {
-        document.title = this.textContent || 'Hello World';
-      });
+    <!-- scripts, that let you define lifecycle and custom methods -->
+    <script td-method="constructor">
+      new MutationObserver(() => {
+        this.decorateHeader();
+      }).observe(this, { childList: true });
     </script>
-  </custom-title>
+    <script td-method="decorateHeader">
+      this.id = this.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+
+      const link = this.shadowRoot.querySelector('a');
+      link.href = `#${this.id}`;
+    </script>
+  </header-anchor>
 </template>
 
 <!-- process the template to generate new definitions -->
 <script>
-  TramDeco.processTemplate(componentDefinitions);
+  TramDeco.processTemplate(definitions);
 </script>
 
 <!-- use our new element! -->
-<custom-title>Tram-Deco is Cool!</custom-title>
+<header-anchor>
+  <h1>Introduction</h1>
+</header-anchor>
+This is some introductory content
+<header-anchor>
+  <h2>More Details</h2>
+</header-anchor>
+If you want to read more, checkout the README.
 ```
 
-[Live on Codepen](https://codepen.io/JRJurman/pen/mdYbxgw)
+[Live on Codepen](https://codepen.io/JRJurman/pen/RwXPqEe)
 
 ## How to use
 
@@ -91,11 +111,6 @@ Create a template tag with your component definitions, and then use Tram-Deco to
 ```
 
 ### Export JS Definition
-
-> [!important]
->
-> Tram-Deco import depends on `setHTMLUnsafe`, which is a recently released feature. Check
-> [caniuse.com](https://caniuse.com/?search=setHTMLUnsafe) to understand browser support and coverage here.
 
 If you want to export your component definition, to be used in other projects, or to organize the components in
 different files, you can do the following:
