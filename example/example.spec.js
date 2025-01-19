@@ -43,12 +43,6 @@ test.describe('Tram-Deco Example Components', () => {
 		await expect(counterB).toHaveAttribute('count', '12');
 		await expect(counterB.locator('button')).toHaveText('Counter: 12');
 
-		// validate that exported components are rendered as expected
-		const spoilerTag = page.locator('spoiler-tag');
-		await expect(spoilerTag.locator('[aria-hidden="true"]')).toBeVisible();
-		await spoilerTag.click();
-		await expect(spoilerTag.locator('[aria-hidden="false"]')).toBeVisible();
-
 		// validate that button that implements a shadow DOM from a parent with none works as expected
 		const removableButton = page.locator('red-removable-button#r');
 		await expect(removableButton).toBeVisible();
@@ -72,5 +66,11 @@ test.describe('Tram-Deco Example Components', () => {
 		await expect(decrementingCounter).toHaveAttribute('count', '5');
 		await decrementingCounter.click();
 		await expect(decrementingCounter).toHaveAttribute('count', '4');
+
+		// validate that exported components work as expected
+		const introAnchor = page.locator('header-anchor#introduction');
+		await expect(introAnchor.locator('a')).toHaveAttribute('href', '#introduction');
+		const detailsAnchor = page.locator('header-anchor#more-details');
+		await expect(detailsAnchor.locator('a')).toHaveAttribute('href', '#more-details');
 	});
 });

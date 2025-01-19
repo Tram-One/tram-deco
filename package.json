@@ -15,7 +15,7 @@
 		"start": "serve . -p 3000",
 		"prepublishOnly": "npm run build",
 		"build": "uglifyjs tram-deco.js -o tram-deco.min.js -c -m",
-		"test-export": "node scripts/export-components.js example/spoiler-tag.html -o example/spoiler-tag.js",
+		"test-export": "node scripts/export-components.js example/header-anchor.html -o example/header-anchor.js",
 		"pretest": "npm run build && npm run test-export",
 		"test": "playwright test --ui",
 		"test:ci": "playwright test"

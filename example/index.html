@@ -169,8 +169,8 @@
 </script>
 
 <!-- import definition from external file -->
-<!-- this definition must be built using `npx tram-deco export-components ./spoiler-tag.html` -->
-<script src="./spoiler-tag.js"></script>
+<!-- this definition must be built using `npx tram-deco export-components ./header-anchor.html` -->
+<script src="./header-anchor.js"></script>
 
 <!-- include the defined components in the main HTML body -->
 <custom-title>Tram-Deco is Cool!</custom-title>
@@ -184,4 +184,12 @@
 	<span slot="title">Import Alert</span>
 	<span>The following spoiler only works on browsers that support <code>setHTMLUnsafe</code></span>
 </callout-alert>
-This is some <spoiler-tag>mystery</spoiler-tag> content.
+
+<header-anchor>
+	<h1>Introduction</h1>
+</header-anchor>
+This is some introductory content
+<header-anchor>
+	<h2>More Details</h2>
+</header-anchor>
+If you want to read more, checkout the README.

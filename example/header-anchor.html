@@ -1,0 +1,33 @@
+<header-anchor>
+	<template shadowrootmode="open">
+		<style>
+			a {
+				color: inherit;
+			}
+			::slotted(*)::before {
+				content: '# ';
+				opacity: 0.3;
+			}
+			::slotted(*:hover)::before {
+				opacity: 0.7;
+			}
+			a:not(:hover) {
+				text-decoration: none;
+			}
+		</style>
+
+		<a><slot></slot></a>
+	</template>
+
+	<script td-method="constructor">
+		new MutationObserver(() => {
+			this.decorateHeader();
+		}).observe(this, { childList: true });
+	</script>
+	<script td-method="decorateHeader">
+		this.id = this.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+
+		const link = this.shadowRoot.querySelector('a');
+		link.href = `#${this.id}`;
+	</script>
+</header-anchor>
