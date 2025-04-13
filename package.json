@@ -36,7 +36,6 @@
 	"devDependencies": {
 		"@playwright/test": "^1.46.1",
 		"@types/node": "^22.5.0",
-		"cypress": "^13.10.0",
 		"playwright-webkit": "^1.46.1",
 		"prettier": "^3.2.4",
 		"serve": "^14.2.1",
